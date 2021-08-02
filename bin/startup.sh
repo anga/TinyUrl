@@ -4,6 +4,7 @@ echo "Installing new gems..."
 bundle install
 
 echo "Runing new migrations..."
+rails db:create
 rails db:migrate
 
 echo "Starting sergver..."

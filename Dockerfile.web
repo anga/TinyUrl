@@ -36,19 +36,10 @@ COPY Gemfile.lock Gemfile.lock
 
 RUN gem install bundler:2.2.12
 
-# development/production differs in bundle install
-# RUN if [[ "$RAILS_ENV" == "production" ]]; then; bundle install --jobs 20 --retry 5 --without development test; else bundle install --jobs 20 --retry 5; fi
-RUN bundle install #--jobs 20 --retry 5
-
-# Remove build dependencies and install runtime dependencies
-#RUN apk del build-dependency
-#RUN apk add --update mariadb-client-libs postgresql-client postgresql-libs sqlite-libs nodejs tzdata
+RUN bundle install
 
 # Adding project files
 COPY . .
-
-# Backend does not have assets
-#RUN bundle exec rails assets:precompile
 
 EXPOSE 3000
 
