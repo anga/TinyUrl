@@ -1,0 +1,50 @@
+version: '3.7'
+
+# To access data postgres writes within container from host machine
+volumes:
+  postgres_data: {}
+
+services:
+######################################
+#   WEB APPLICATIONS AND APIS
+######################################
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.web
+      args:
+        RAILS_ENV: development
+    volumes:
+      - "./:/var/www/app"
+    depends_on:
+      - db
+      - redis
+    # env_file: .env
+    environment:
+      RAILS_ENV: development
+      EXAMPLE: value
+    ports:
+      - "3000:3000"
+
+######################################
+#   REQUIRED SERVICES
+######################################
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  db:
+    image: postgres:11-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
