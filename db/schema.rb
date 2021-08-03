@@ -10,9 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2021_08_02_212301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "tapes", force: :cascade do |t|
+    t.string "ip"
+    t.string "user_agent"
+    t.bigint "tiny_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tiny_id"], name: "index_tapes_on_tiny_id"
+  end
+
+  create_table "tinies", force: :cascade do |t|
+    t.text "long"
+    t.string "short"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
 end

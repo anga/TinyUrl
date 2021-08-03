@@ -1,6 +1,10 @@
 # Using alpine image for small size
 FROM ruby:2.7.3
 
+RUN curl https://deb.nodesource.com/setup_12.x | bash
+RUN curl https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
 # Use virtual build-dependencies tag so we can remove these packages after bundle install
 RUN apt-get update && \
   apt-get install -qq -y \
@@ -13,6 +17,8 @@ RUN apt-get update && \
     unzip \
     vim \
     whois \
+    nodejs \
+    yarn \
     zip #&& apt-get install build-dependency build-base ruby-dev mysql-dev postgresql-dev git sqlite-dev
 
 # Set an environment variable where the Rails app is installed to inside of Docker image

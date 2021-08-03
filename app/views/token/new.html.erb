@@ -1,0 +1,10 @@
+<p> Create your Tiny URL</p>
+<% if @tiny.errors.any? %>
+  <p>Invalid url</p>
+<% end %>
+<%= form_with url: "/", method: :post do |form| %>
+  <%= form.label :long, "Url:" %>
+  <%= form.text_field :long, value: @tiny.long %>
+  <%= form.submit "Create" %>
+<% end %>
+
